@@ -16,45 +16,48 @@ knitr::opts_chunk$set(
 # bioloupe
 
 <!-- badges: start -->
+  [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
 <!-- badges: end -->
 
-The goal of bioloupe is to ...
+## Overview
+
+The package `bioloupe` provides an interface to:
+
+- [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
+- [Biolink API](https://api.monarchinitiative.org/api)
+- [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
 
 ## Installation
 
-You can install the released version of bioloupe from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-## install.packages("bioloupe")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from Github.
 
 ``` r
 # install.packages("devtools")
-## devtools::install_github("frequena/bioloupe")
+devtools::install_github("frequena/bioloupe")
 ```
-## Example
+## Examples
 
-This is a basic example which shows you how to solve a common problem:
 
-```{r example}
-## library(bioloupe)
-## basic example code
-```
+### Find biomedical entities from a PMID
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+```{r}
+library(bioloupe)
 
-```{r cars}
-summary(cars)
+find_pubtator(pmid = '22894909')
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
+### Find biomedical entities from a text
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+
+```{r}
+
+abstract_input <- 'Marfan syndrome is a multisystemic genetic condition affecting connective tissue. It carries a reduced life expectancy, largely dependent on cardiovascular complications. More common cardiac manifestations such as aortic dissection and aortic valve incompetence have been widely documented in the literature. Mitral valve prolapse (MVP), however, has remained poorly documented. This article aims at exploring the existing literature on the pathophysiology and diagnosis of MVP in patients with Marfan syndrome, defining its current management and outlining the future developments surrounding it.'
+
+result <- find_scigraph(text = abstract_input) 
+
+result$content
+
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

@@ -1,13 +1,26 @@
 Package: bioloupe
-Title: What the Package Does (One Line, Title Case)
+Title: Interface with APIs related to biomedical Named-Entity recognition (NER) using R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Francisco",
+           family = "Requena",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "frequena.sanchez@hotmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: It provides access to various APIs related to Named-Entity Recogniion (NER) using R .
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    testthat (>= 2.1.0)
+Imports: 
+    httr,
+    jsonlite,
+    curl,
+    stringr,
+    dplyr,
+    tibble,
+    magrittr,
+    tidyr,
+    rlang
+RoxygenNote: 6.1.1
