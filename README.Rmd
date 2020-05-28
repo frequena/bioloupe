@@ -20,14 +20,6 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-## Overview
-
-The package `bioloupe` provides an interface to:
-
-- [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
-- [Biolink API](https://api.monarchinitiative.org/api)
-- [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
-
 ## Installation
 
 You can install the development version from Github.
@@ -36,19 +28,45 @@ You can install the development version from Github.
 # install.packages("devtools")
 devtools::install_github("frequena/bioloupe")
 ```
+
+## Overview
+
+The package `bioloupe` provides an interface to:
+
+* [NCBI Text Mining Web Services](https://www.ncbi.nlm.nih.gov/research/bionlp/APIs/)
+  + [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
+  + [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
+* [Biolink API](https://api.monarchinitiative.org/api)
+
+
 ## Examples
 
 
-### Find biomedical entities from a PMID
+### Find biomedical entities from the abstract of a PMID
 
 ```{r}
 library(bioloupe)
 
-find_pubtator(pmid = '22894909')
+find_pubtator(pmid = 22894909, output = 'dataframe')
+```
+
+...or retrieve the result as HTML code:
+
+```{r}
+
+find_pubtator(pmid = 32220312, output = 'html')
+
 ```
 
 
 ### Find biomedical entities from a text
+
+#### Using NCBI Text Mining Web Services
+
+
+
+
+#### Using SciGraph
 
 
 ```{r}

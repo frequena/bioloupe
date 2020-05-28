@@ -9,15 +9,6 @@
 
 <!-- badges: end -->
 
-## Overview
-
-The package `bioloupe` provides an interface to:
-
-  - [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
-  - [Biolink
-    API](https://api.monarchinitiative.org/api)
-  - [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
-
 ## Installation
 
 You can install the development version from Github.
@@ -27,14 +18,25 @@ You can install the development version from Github.
 devtools::install_github("frequena/bioloupe")
 ```
 
+## Overview
+
+The package `bioloupe` provides an interface to:
+
+  - [NCBI Text Mining Web
+    Services](https://www.ncbi.nlm.nih.gov/research/bionlp/APIs/)
+      - [PubTator
+        API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
+      - [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
+  - [Biolink API](https://api.monarchinitiative.org/api)
+
 ## Examples
 
-### Find biomedical entities from a PMID
+### Find biomedical entities from the abstract of a PMID
 
 ``` r
 library(bioloupe)
 
-find_pubtator(pmid = '22894909')
+find_pubtator(pmid = 22894909, output = 'dataframe')
 #> # A tibble: 20 x 6
 #>    pmid     start end   word     category identifier
 #>    <chr>    <chr> <chr> <chr>    <chr>    <chr>     
@@ -60,7 +62,19 @@ find_pubtator(pmid = '22894909')
 #> 20 22894909 1692  1698  humans   Species  9606
 ```
 
+…or retrieve the result as HTML code:
+
+``` r
+
+find_pubtator(pmid = 32220312, output = 'html')
+#> [1] During <span style="color:lime">human</span> evolution, the knee adapted to the biomechanical demands of bipedalism by altering chondrocyte developmental programs. This adaptive process was likely not without deleterious consequences to health. Today, <span style="color:red">osteoarthritis</span> occurs in 250 million <span style="color:lime">people</span>, with risk variants enriched in non-coding sequences near chondrocyte genes, loci that likely became optimized during knee evolution. We explore this relationship by epigenetically profiling joint chondrocytes, revealing ancient selection and recent constraint and drift on knee regulatory elements, which also overlap <span style="color:red">osteoarthritis</span> variants that contribute to disease heritability by tending to modify constrained functional sequence. We propose a model whereby genetic violations to regulatory constraint, tolerated during knee development, lead to adult pathology. In support, we discover a causal enhancer variant (<span style="color:orange">rs6060369</span>) present in billions of <span style="color:lime">people</span> at a risk locus (<span style="color:green">GDF5</span>-<span style="color:green">UQCC1</span>), showing how it impacts <span style="color:lime">mouse</span> knee-shape and <span style="color:red">osteoarthritis</span>. Overall, our methods link an evolutionarily novel aspect of <span style="color:lime">human</span> anatomy to its pathogenesis.
+```
+
 ### Find biomedical entities from a text
+
+#### Using NCBI Text Mining Web Services
+
+#### Using SciGraph
 
 ``` r
 
