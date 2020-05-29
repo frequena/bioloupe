@@ -4,12 +4,10 @@
 \alias{find_pubtator}
 \title{Find entities using Pubtator API}
 \usage{
-find_pubtator(pmid, output = c("dataframe", "html"))
+find_pubtator(pmid)
 }
 \arguments{
 \item{pmid}{text search}
-
-\item{output}{specify the format of the output}
 }
 \value{
 the results from the search

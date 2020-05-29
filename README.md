@@ -36,38 +36,33 @@ The package `bioloupe` provides an interface to:
 ``` r
 library(bioloupe)
 
-find_pubtator(pmid = 22894909, output = 'dataframe')
-#> # A tibble: 20 x 6
-#>    pmid     start end   word     category identifier
-#>    <chr>    <chr> <chr> <chr>    <chr>    <chr>     
-#>  1 22894909 70    75    human    Species  9606      
-#>  2 22894909 270   276   humans   Species  9606      
-#>  3 22894909 281   285   mice     Species  10090     
-#>  4 22894909 683   688   human    Species  9606      
-#>  5 22894909 901   904   IPW      Gene     3653      
-#>  6 22894909 906   911   GRB10    Gene     2887      
-#>  7 22894909 913   919   INPP5F   Gene     22876     
-#>  8 22894909 924   930   ZNF597   Gene     146434    
-#>  9 22894909 1079  1083  ZFAT     Gene     57623     
-#> 10 22894909 1085  1093  ZFAT-AS1 Gene     594840    
-#> 11 22894909 1095  1100  GLIS3    Gene     169792    
-#> 12 22894909 1102  1105  NTM      Gene     50863     
-#> 13 22894909 1107  1112  MAGI2    Gene     9863      
-#> 14 22894909 1125  1131  LIN28B   Gene     389421    
-#> 15 22894909 1229  1234  mouse    Species  10090     
-#> 16 22894909 1256  1261  Magi2    Gene     50791     
-#> 17 22894909 1295  1299  ZFAT     Gene     57623     
-#> 18 22894909 1356  1364  ZFAT-AS1 Gene     594840    
-#> 19 22894909 1430  1434  ZFAT     Gene     57623     
-#> 20 22894909 1692  1698  humans   Species  9606
+b <- find_pubtator(pmid = c(23819905, 23819906, 32220312))
+
+
+b[[2]]$abstract_tagged
+#> [1] Chemokines have been shown to play an important role in the pathogenesis of <span style="color:red">pancreatitis</span>, but the role of chemokine <span style="color:green">CXCL9</span> in <span style="color:red">pancreatitis</span> is poorly understood. The aim of this study was to investigate whether <span style="color:green">CXCL9</span> was a modulating factor in chronic <span style="color:red">pancreatitis</span>. Chronic <span style="color:red">pancreatitis</span> was induced in <span style="color:lime">Sprague-Dawley rats</span> by intraductal infusion of <span style="color:blue">trinitrobenzene sulfonic acid</span> (TNBS) and <span style="color:green">CXCL9</span> expression was assessed by immunohistochemistry, Western blot analysis and enzyme linked immunosorbent assay (ELISA). Recombinant <span style="color:lime">human</span> <span style="color:green">CXCL9</span> protein (<span style="color:green">rCXCL9</span>), neutralizing antibody and normal saline (NS) were administered to <span style="color:lime">rats</span> with chronic <span style="color:red">pancreatitis</span> by subcutaneous injection. The severity of <span style="color:red">fibrosis</span> was determined by measuring <span style="color:blue">hydroxyproline</span> in pancreatic tissues and histological grading. The effect of <span style="color:green">rCXCL9</span> on activated pancreatic stellate cells (PSCs) in vitro was examined and collagen 1alpha1, <span style="color:green">TGF-beta1</span> and <span style="color:green">CXCR3</span> expression was assessed by Western blot analysis in isolated <span style="color:lime">rat</span> PSCs. <span style="color:red">Chronic pancreatic injury</span> in <span style="color:lime">rats</span> was induced after TNBS treatment and <span style="color:green">CXCL9</span> protein was markedly upregulated during TNBS-induced <span style="color:red">chronic pancreatitis</span>. Although <span style="color:red">parenchymal injury in the pancreas</span> was not obviously affected after <span style="color:green">rCXCL9</span> and neutralizing antibody administration, <span style="color:green">rCXCL9</span> could attenuate fibrogenesis in <span style="color:red">TNBS-induced chronic pancreatitis</span> in vivo and exerted antifibrotic effects in vitro, suppressing collagen production in activated PSCs. In conclusion, <span style="color:green">CXCL9</span> is involved in the modulation of pancreatic fibrogenesis in <span style="color:red">TNBS-induced chronic pancreatitis</span> in <span style="color:lime">rats</span>, and may be a therapeutic target in <span style="color:red">pancreatic fibrosis</span>.
 ```
 
 …or retrieve the result as HTML code:
 
 ``` r
 
-find_pubtator(pmid = 32220312, output = 'html')
-#> [1] During <span style="color:lime">human</span> evolution, the knee adapted to the biomechanical demands of bipedalism by altering chondrocyte developmental programs. This adaptive process was likely not without deleterious consequences to health. Today, <span style="color:red">osteoarthritis</span> occurs in 250 million <span style="color:lime">people</span>, with risk variants enriched in non-coding sequences near chondrocyte genes, loci that likely became optimized during knee evolution. We explore this relationship by epigenetically profiling joint chondrocytes, revealing ancient selection and recent constraint and drift on knee regulatory elements, which also overlap <span style="color:red">osteoarthritis</span> variants that contribute to disease heritability by tending to modify constrained functional sequence. We propose a model whereby genetic violations to regulatory constraint, tolerated during knee development, lead to adult pathology. In support, we discover a causal enhancer variant (<span style="color:orange">rs6060369</span>) present in billions of <span style="color:lime">people</span> at a risk locus (<span style="color:green">GDF5</span>-<span style="color:green">UQCC1</span>), showing how it impacts <span style="color:lime">mouse</span> knee-shape and <span style="color:red">osteoarthritis</span>. Overall, our methods link an evolutionarily novel aspect of <span style="color:lime">human</span> anatomy to its pathogenesis.
+
+b[[2]]$dataframe
+#> # A tibble: 36 x 7
+#>    pmid     start   end word                     category identifier  color
+#>    <chr>    <int> <int> <chr>                    <chr>    <chr>       <chr>
+#>  1 23819906    31    36 CXCL9                    Gene     246759      green
+#>  2 23819906    61    73 pancreatitis             Disease  MESH:D0101… red  
+#>  3 23819906    85   114 trinitrobenzene sulfoni… Chemical MESH:D0143… blue 
+#>  4 23819906   118   122 rats                     Species  10116       lime 
+#>  5 23819906   200   212 pancreatitis             Disease  MESH:D0101… red  
+#>  6 23819906   240   245 CXCL9                    Gene     246759      green
+#>  7 23819906   249   261 pancreatitis             Disease  MESH:D0101… red  
+#>  8 23819906   333   338 CXCL9                    Gene     246759      green
+#>  9 23819906   374   386 pancreatitis             Disease  MESH:D0101… red  
+#> 10 23819906   396   408 pancreatitis             Disease  MESH:D0101… red  
+#> # … with 26 more rows
 ```
 
 ### Find biomedical entities from a text

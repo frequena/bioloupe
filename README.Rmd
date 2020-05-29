@@ -47,14 +47,18 @@ The package `bioloupe` provides an interface to:
 ```{r}
 library(bioloupe)
 
-find_pubtator(pmid = 22894909, output = 'dataframe')
+b <- find_pubtator(pmid = c(23819905, 23819906, 32220312))
+
+
+b[[2]]$abstract_tagged
 ```
 
 ...or retrieve the result as HTML code:
 
 ```{r}
 
-find_pubtator(pmid = 32220312, output = 'html')
+
+b[[2]]$dataframe
 
 ```
 
