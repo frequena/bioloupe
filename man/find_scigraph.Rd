@@ -9,21 +9,21 @@ find_scigraph(text, include_category = NULL, exclude_category = NULL,
   include_acronym = FALSE, include_numbers = FALSE)
 }
 \arguments{
-\item{text}{text}
+\item{text}{text to annotate}
 
 \item{include_category}{include category}
 
 \item{exclude_category}{exclude category}
 
-\item{min_length}{minimum length}
+\item{min_length}{minimum length of characters to annotate}
 
-\item{longest_only}{longest only}
+\item{longest_only}{if two or more words overlap, take only the longest one}
 
-\item{include_abbreviation}{include abbreviation}
+\item{include_abbreviation}{consider abbreviations in the text}
 
-\item{include_acronym}{include acronym}
+\item{include_acronym}{consider acronyms in the text}
 
-\item{include_numbers}{include numbers}
+\item{include_numbers}{consider numbers in the text}
 }
 \value{
 the results from the search
@@ -33,7 +33,7 @@ the results from the search
 }
 \examples{
 \dontrun{
-biolink_api('nlp/annotate, content = 'Marfan syndrome', include_category = 'anatomical entity)
+find_scigraph(text = 'Marfan syndrome the gene DLL', include_category = 'anatomical entity')
 }
 
 }

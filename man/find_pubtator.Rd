@@ -4,10 +4,12 @@
 \alias{find_pubtator}
 \title{Find entities using Pubtator API}
 \usage{
-find_pubtator(pmid)
+find_pubtator(pmid, bioconcept = "all")
 }
 \arguments{
-\item{pmid}{text search}
+\item{pmid}{pmid}
+
+\item{bioconcept}{bioconcept}
 }
 \value{
 the results from the search
@@ -17,6 +19,6 @@ Find entities using Pubtator API
 }
 \examples{
 \dontrun{
-find_pubtator('22894909')
+find_pubtator(22894909, bioconcept = 'all')
 }
 }

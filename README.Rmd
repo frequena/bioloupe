@@ -33,53 +33,40 @@ devtools::install_github("frequena/bioloupe")
 
 The package `bioloupe` provides an interface to:
 
-* [NCBI Text Mining Web Services](https://www.ncbi.nlm.nih.gov/research/bionlp/APIs/)
-  + [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
-  + [TaggerOne](https://www.ncbi.nlm.nih.gov/research/bionlp/Tools/taggerone/)
+* [PubTator API](https://www.ncbi.nlm.nih.gov/research/pubtator/)
 * [Biolink API](https://api.monarchinitiative.org/api)
 
 
 ## Examples
 
 
-### Find biomedical entities from the abstract of a PMID
+### Find biomedical entities of PubMed titles and abstracts
 
 ```{r}
 library(bioloupe)
 
-b <- find_pubtator(pmid = c(23819905, 23819906, 32220312))
+b <- find_pubtator(pmid = c(23819905, 23819906, 32220312), bioconcept = 'gene')
 
-
-b[[2]]$abstract_tagged
+b[[2]]$dataframe
 ```
 
 ...or retrieve the result as HTML code:
 
 ```{r}
-
-
-b[[2]]$dataframe
+b[[2]]$abstract_tagged
 
 ```
 
-
 ### Find biomedical entities from a text
-
-#### Using NCBI Text Mining Web Services
-
-
-
 
 #### Using SciGraph
 
 
 ```{r}
-
 abstract_input <- 'Marfan syndrome is a multisystemic genetic condition affecting connective tissue. It carries a reduced life expectancy, largely dependent on cardiovascular complications. More common cardiac manifestations such as aortic dissection and aortic valve incompetence have been widely documented in the literature. Mitral valve prolapse (MVP), however, has remained poorly documented. This article aims at exploring the existing literature on the pathophysiology and diagnosis of MVP in patients with Marfan syndrome, defining its current management and outlining the future developments surrounding it.'
 
 result <- find_scigraph(text = abstract_input) 
-
 result$content
-
 ```
+
 

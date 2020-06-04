@@ -16,14 +16,14 @@
 #' @return the results from the search
 #' @examples
 #' \dontrun{
-#' biolink_api('nlp/annotate, content = 'Marfan syndrome', include_category = 'anatomical entity)
+#' find_tagger('nlp/annotate, content = 'Marfan syndrome', include_category = 'anatomical entity)
 #' }
 #'
 
 #' @rdname find_tagger
 #' @export
 
-
+# puedo todos?
 find_tagger <- function(text_input, bioconcept = c('gene_species', 'chemical', 'disease',
                                                    'mutation')) {
 

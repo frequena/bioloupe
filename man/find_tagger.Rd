@@ -20,7 +20,7 @@ the results from the search
 }
 \examples{
 \dontrun{
-biolink_api('nlp/annotate, content = 'Marfan syndrome', include_category = 'anatomical entity)
+find_tagger('nlp/annotate, content = 'Marfan syndrome', include_category = 'anatomical entity)
 }
 
 }

@@ -1,6 +1,7 @@
 #' Find entities using Pubtator API
 #'
-#' @param pmid text search
+#' @param pmid pmid
+#' @param bioconcept bioconcept
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @importFrom dplyr case_when filter slice
@@ -12,21 +13,33 @@
 #' @return the results from the search
 #' @examples
 #' \dontrun{
-#' find_pubtator('22894909')
+#' find_pubtator(22894909, bioconcept = 'all')
 #' }
 
-find_pubtator <- function(pmid){
+find_pubtator <- function(pmid, bioconcept = 'all'){
 
-  #
-  # a
+  check_internet()
 
-  # pmid <- 31366551
+
+  # pmid <- c(23819905, 23819906, 32220312)
+  # bioconcept <- 'gene'
+  # c('all', 'gene', 'disease', 'chemical', 'species', 'mutation', 'cellline')
+
+  # pmid <- 'PMC3531190'
+  # bioconcept <- 'all'
+
 
   input_vector <- pmid
   pmid <- pmid %>% paste(collapse = ',')
 
+  if (bioconcept == 'all') {
 
-  base_url <- paste0(pubtator_url, pmid)
+    base_url <- paste0(pubtator_url, 'pmids=', pmid)
+  } else {
+
+    base_url <- paste0(pubtator_url, 'pmids=', pmid, '&concepts=', bioconcept)
+  }
+
   res <- GET(base_url, user_agent = ua)
 
   content_query <- content(res, encoding = 'UTF-8')
@@ -36,20 +49,23 @@ find_pubtator <- function(pmid){
 
   for (i in 1:length(input_vector)) {
 
-    content_tmp <- content_query[content_query %>% str_detect(as.character(input_vector[i]))]
+  content_tmp <- content_query[content_query %>% str_detect(as.character(input_vector[i]))]
 
-  # Let's see what to do with title
   title <- content_tmp[1]
   title <- str_remove(title, paste0(input_vector[i], '\\|t\\|'))
+  splitted_title <- str_split(title, '')[[1]]
+
 
   abstract <- content_tmp[2]
   abstract <- str_remove(abstract, paste0(input_vector[i], '\\|a\\|'))
+  splitted_abstract <- str_split(abstract, '')[[1]]
+
 
 
   result_tbl <- content_tmp %>%
     enframe(name = NULL) %>%
     slice(3:nrow(.)) %>%
-    separate(.data$value, sep = '\t', into =c('pmid', 'start', 'end', 'word', 'category', 'identifier')) %>%
+    separate(.data$value, sep = '\t', into =c('id', 'start', 'end', 'word', 'category', 'identifier')) %>%
     mutate(color = case_when(category == 'Gene' ~ 'green',
                              category == 'Species' ~ 'lime',
                              category == 'Disease' ~ 'red',
@@ -62,11 +78,16 @@ find_pubtator <- function(pmid){
   # Tagging title
 
   tags_title <- result_tbl %>%
+    filter(.data$element == 'title')
+
+
+  if (nrow(tags_title) > 0) {
+
+  tags_title <- tags_title %>%
     mutate(start = .data$start + 1) %>%
     filter(.data$start < nchar(title)) %>%
     mutate(html_tag = paste0('<span style="color:', .data$color, '">', .data$word, '</span>'))
 
-  splitted_title <- str_split(title, '')[[1]]
 
   for (j in 1:nrow(tags_title)) {
 
@@ -79,10 +100,11 @@ find_pubtator <- function(pmid){
 
   }
 
+  }
+
   title_tagged <- splitted_title %>%
     paste(collapse = '') %>%
     noquote()
-
 
   # Tagging abstract
 
@@ -92,8 +114,6 @@ find_pubtator <- function(pmid){
       filter(.data$element == 'abstract') %>%
       mutate(html_tag = paste0('<span style="color:', .data$color, '">', .data$word, '</span>'))
 
-
-    splitted_abstract <- str_split(abstract, '')[[1]]
 
     for (k in 1:nrow(result_tags)) {
 

@@ -33,7 +33,7 @@ check_response  <- function(resp) {
 
 ua <- user_agent("bioloupe_package")
 
-pubtator_url <- 'https://www.ncbi.nlm.nih.gov/research/pubtator-api/publications/export/pubtator?pmids='
+pubtator_url <- 'https://www.ncbi.nlm.nih.gov/research/pubtator-api/publications/export/pubtator?'
 scigraph_url <- 'https://api.monarchinitiative.org/api'
 tagger_url <- 'https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/RESTful/tmTool.cgi/'
 
