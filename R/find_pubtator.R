@@ -56,7 +56,8 @@ find_pubtator <- function(pmid){
                              category == 'SNP' ~ 'orange',
                              category == 'Chemical' ~ 'blue'),
            start = as.integer(.data$start),
-           end = as.integer(.data$end))
+           end = as.integer(.data$end)) %>%
+    mutate(element = ifelse(.data$start < nchar(title), 'title', 'abstract'))
 
   # Tagging title
 
@@ -87,8 +88,7 @@ find_pubtator <- function(pmid){
 
     result_tags <- result_tbl %>%
       mutate(start = .data$start - nchar(title),
-             end = .data$end - nchar(title) - 1,
-             element = ifelse(.data$start <= 0, 'title', 'abstract')) %>%
+             end = .data$end - nchar(title) - 1) %>%
       filter(.data$element == 'abstract') %>%
       mutate(html_tag = paste0('<span style="color:', .data$color, '">', .data$word, '</span>'))
 
