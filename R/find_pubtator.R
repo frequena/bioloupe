@@ -28,6 +28,8 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
   # pmid <- 'PMC3531190'
   # bioconcept <- 'all'
 
+  # pmid <- 20583161
+
 
   input_vector <- pmid
   pmid <- pmid %>% paste(collapse = ',')
@@ -59,8 +61,6 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
   abstract <- content_tmp[2]
   abstract <- str_remove(abstract, paste0(input_vector[i], '\\|a\\|'))
   splitted_abstract <- str_split(abstract, '')[[1]]
-
-
 
   result_tbl <- content_tmp %>%
     enframe(name = NULL) %>%
@@ -108,30 +108,40 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
 
   # Tagging abstract
 
-    result_tags <- result_tbl %>%
+  tags_title <- result_tbl %>%
+    filter(.data$element == 'title')
+
+  tags_abstract <- result_tbl %>%
+    filter(.data$element == 'abstract')
+
+  if (nrow(tags_abstract) > 0) {
+
+    tags_abstract <- tags_abstract %>%
       mutate(start = .data$start - nchar(title),
              end = .data$end - nchar(title) - 1) %>%
-      filter(.data$element == 'abstract') %>%
       mutate(html_tag = paste0('<span style="color:', .data$color, '">', .data$word, '</span>'))
 
 
-    for (k in 1:nrow(result_tags)) {
 
-      tmp_start <- result_tags[k,]$start
-      tmp_end <- result_tags[k,]$end
-      tmp_html_tag <- result_tags[k,]$html_tag
+    for (k in 1:nrow(tags_abstract)) {
+
+      tmp_start <- tags_abstract[k,]$start
+      tmp_end <- tags_abstract[k,]$end
+      tmp_html_tag <- tags_abstract[k,]$html_tag
 
       splitted_abstract[tmp_start] <- tmp_html_tag
       splitted_abstract[(tmp_start + 1):tmp_end] <- ''
 
     }
 
+  }
+
     abstract_tagged <- splitted_abstract %>%
       paste(collapse = '') %>%
       noquote()
 
+    if (nchar(abstract_tagged) == 0) abstract_tagged <- 'No abstract found'
 
-    # }
 
     list_tmp <- list('rm' = list('dataframe' = result_tbl,
                           'abstract_tagged' = abstract_tagged,
@@ -143,6 +153,7 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
 
     return(result_list)
 }
+
 
 
 
