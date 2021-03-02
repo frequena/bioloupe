@@ -161,8 +161,6 @@ find_pubtator <- function(pmid, bioconcept = 'all', raw_abstract = FALSE){
 
     }
 
-
-
     names(list_tmp) <- input_vector[i]
     result_list <- append(result_list, list_tmp)
   }
