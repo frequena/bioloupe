@@ -144,7 +144,7 @@ find_pubtator <- function(pmid, bioconcept = 'all', raw_abstract = FALSE){
     if (nchar(abstract_tagged) == 0) abstract_tagged <- 'No abstract found'
 
 
-    if (isFALSE(raw_pubmed)) {
+    if (isFALSE(raw_abstract)) {
 
 
       list_tmp <- list('rm' = list('dataframe' = result_tbl,
