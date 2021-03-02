@@ -2,6 +2,7 @@
 #'
 #' @param pmid pmid
 #' @param bioconcept bioconcept
+#' @param raw_abstract raw_abstract
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @importFrom dplyr case_when filter slice
@@ -16,7 +17,7 @@
 #' find_pubtator(22894909, bioconcept = 'all')
 #' }
 
-find_pubtator <- function(pmid, bioconcept = 'all'){
+find_pubtator <- function(pmid, bioconcept = 'all', raw_abstract = FALSE){
 
   check_internet()
 
@@ -143,9 +144,24 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
     if (nchar(abstract_tagged) == 0) abstract_tagged <- 'No abstract found'
 
 
-    list_tmp <- list('rm' = list('dataframe' = result_tbl,
-                          'abstract_tagged' = abstract_tagged,
-                          'title_tagged' = title_tagged))
+    if (isFALSE(raw_pubmed)) {
+
+
+      list_tmp <- list('rm' = list('dataframe' = result_tbl,
+                                   'abstract_tagged' = abstract_tagged,
+                                   'title_tagged' = title_tagged))
+
+    } else {
+
+
+      list_tmp <- list('rm' = list('dataframe' = result_tbl,
+                                   'abstract_tagged' = abstract,
+                                   'title_tagged' = title_tagged))
+
+
+    }
+
+
 
     names(list_tmp) <- input_vector[i]
     result_list <- append(result_list, list_tmp)
@@ -153,8 +169,3 @@ find_pubtator <- function(pmid, bioconcept = 'all'){
 
     return(result_list)
 }
-
-
-
-
-

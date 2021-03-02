@@ -4,12 +4,14 @@
 \alias{find_pubtator}
 \title{Find entities using Pubtator API}
 \usage{
-find_pubtator(pmid, bioconcept = "all")
+find_pubtator(pmid, bioconcept = "all", raw_abstract = FALSE)
 }
 \arguments{
 \item{pmid}{pmid}
 
 \item{bioconcept}{bioconcept}
+
+\item{raw_abstract}{raw_abstract}
 }
 \value{
 the results from the search
